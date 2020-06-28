@@ -3,7 +3,7 @@
 > A simple relay modern app
 
 - Koa in the backend
-- React with Relay Modern for the frotnend
+- React with Relay Modern for the frontend
 
 
 Todo:
