@@ -21,15 +21,59 @@ type Item implements Node {
 
   """mongoose _id"""
   _id: String!
-  name: String
-  price: Int
-  type: String
+  name: String!
+  price: Int!
+  type: ItemTypeEnum!
   createdAt: String
   updatedAt: String
 }
 
+enum ItemTypeEnum {
+  GUN
+  ARMOR
+  SKILL
+}
+
 type Mutation {
+  UserRegisterWithEmail(input: UserRegisterWithEmailInput!): UserRegisterWithEmailPayload
+  UserLoginWithEmail(input: UserLoginWithEmailInput!): UserLoginWithEmailPayload
   CreateItem(input: CreateItemInput!): CreateItemPayload
+}
+
+type UserRegisterWithEmailPayload {
+  token: String
+  me: User
+  clientMutationId: String
+}
+
+"""User data"""
+type User implements Node {
+  """The ID of an object"""
+  id: ID!
+
+  """mongoose _id"""
+  _id: String!
+  email: String!
+  createdAt: String
+  updatedAt: String
+}
+
+input UserRegisterWithEmailInput {
+  email: String!
+  password: String!
+  clientMutationId: String
+}
+
+type UserLoginWithEmailPayload {
+  token: String
+  me: User
+  clientMutationId: String
+}
+
+input UserLoginWithEmailInput {
+  email: String!
+  password: String!
+  clientMutationId: String
 }
 
 type CreateItemPayload {

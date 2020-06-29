@@ -8,8 +8,8 @@ import bcrypt from 'bcryptjs';
  * using user.username
  * @param {Object} user the user to create a jwt for
  */
-const createToken = ({ username, id }) =>
-  jwt.sign({ username, id }, process.env.JWT_SECRET);
+const createToken = ({ email, _id }) =>
+  jwt.sign({ email, _id }, process.env.JWT_SECRET);
 
 /**
  * Takes the token and decode it
@@ -30,9 +30,9 @@ const getUserFromToken = async token => {
  * @param {string} password unhashed of the user
  * @returns {string} hashed password
  */
-const hashPassword = async password => {
+const hashPassword = password => {
   const salt = bcrypt.genSaltSync(10);
-  return bcrypt.hash(password, salt);
+  return bcrypt.hashSync(password, salt);
 };
 
 /**
@@ -41,8 +41,8 @@ const hashPassword = async password => {
  * @param {string} hash
  * @returns boolean
  */
-const comparePassword = async (password, hash) => {
-  return bcrypt.compare(password, hash);
+const comparePassword = (password, hash) => {
+  return bcrypt.compareSync(password, hash);
 };
 
-export { createToken, getUserFromToken, hashPassword, comparePassword}
+export { createToken, getUserFromToken, hashPassword, comparePassword };
