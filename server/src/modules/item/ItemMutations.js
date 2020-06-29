@@ -21,9 +21,8 @@ export const CreateItemMutation = mutationWithClientMutationId({
     item: {
       type: ItemType,
       resolve: async ({ itemId }) => {
-        return {
-          item: Item.findById(itemId),
-        };
+        const item = await Item.findById(itemId);
+        return item;
       },
     },
   },
