@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import UserModel from '../modules/user/UserModel';
 
 // const User = require('../modules/user/UserModel');
 
@@ -19,7 +20,7 @@ const createToken = ({ email, _id }) =>
 const getUserFromToken = async token => {
   try {
     const user = jwt.verify(token, process.env.JWT_SECRET);
-    // return User.findOne({ id: user.id });
+    return UserModel.findById(user._id);
   } catch (err) {
     return null;
   }

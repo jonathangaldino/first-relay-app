@@ -1,6 +1,7 @@
 import { GraphQLObjectType } from 'graphql';
 import { nodeField } from '../modules/node/definitions';
 import { ListItemsQuery } from '../modules/item/ItemQuery';
+import { MeQuery } from '../modules/user/UserQuery';
 
 const QueryType = new GraphQLObjectType({
   name: 'Query',
@@ -8,6 +9,7 @@ const QueryType = new GraphQLObjectType({
   fields: () => ({
     node: nodeField,
     items: ListItemsQuery,
+    me: MeQuery,
   }),
 });
 

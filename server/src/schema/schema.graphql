@@ -6,6 +6,7 @@ type Query {
     id: ID!
   ): Node
   items: [Item]!
+  me: User!
 }
 
 """An object with an ID"""
@@ -34,18 +35,6 @@ enum ItemTypeEnum {
   SKILL
 }
 
-type Mutation {
-  UserRegisterWithEmail(input: UserRegisterWithEmailInput!): UserRegisterWithEmailPayload
-  UserLoginWithEmail(input: UserLoginWithEmailInput!): UserLoginWithEmailPayload
-  CreateItem(input: CreateItemInput!): CreateItemPayload
-}
-
-type UserRegisterWithEmailPayload {
-  token: String
-  me: User
-  clientMutationId: String
-}
-
 """User data"""
 type User implements Node {
   """The ID of an object"""
@@ -56,6 +45,18 @@ type User implements Node {
   email: String!
   createdAt: String
   updatedAt: String
+}
+
+type Mutation {
+  UserRegisterWithEmail(input: UserRegisterWithEmailInput!): UserRegisterWithEmailPayload
+  UserLoginWithEmail(input: UserLoginWithEmailInput!): UserLoginWithEmailPayload
+  CreateItem(input: CreateItemInput!): CreateItemPayload
+}
+
+type UserRegisterWithEmailPayload {
+  token: String
+  me: User
+  clientMutationId: String
 }
 
 input UserRegisterWithEmailInput {
