@@ -1,6 +1,7 @@
 import { GraphQLList, GraphQLNonNull } from 'graphql';
-import { ItemType } from '../../graphql/nodes';
+
 import Item from './ItemModel';
+import { ItemType } from './ItemType';
 
 export const ListItemsQuery = {
   type: new GraphQLNonNull(GraphQLList(ItemType)),

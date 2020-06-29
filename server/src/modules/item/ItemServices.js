@@ -1,8 +1,8 @@
 import Item from './ItemModel';
 
-class ItemService {
+class ItemServices {
   /**
-   * 
+   *
    * @param {String} id - id of the Item instance
    * @returns {Object} User | null
    */
@@ -11,4 +11,4 @@ class ItemService {
   }
 }
 
-export default new ItemService();
+export default new ItemServices();

@@ -1,11 +1,11 @@
 import { GraphQLObjectType } from 'graphql';
 
-import { CreateItemMutation } from '../modules/item/ItemMutations';
+import ItemMutations from '../modules/item/mutations';
 
 const MutationType = new GraphQLObjectType({
   name: 'Mutation',
   fields: () => ({
-    createItem: CreateItemMutation,
+    ...ItemMutations,
   }),
 });
 

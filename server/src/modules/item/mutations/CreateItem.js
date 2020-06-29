@@ -1,9 +1,10 @@
 import { mutationWithClientMutationId } from 'graphql-relay';
 import { GraphQLNonNull, GraphQLString, GraphQLInt } from 'graphql';
-import { ItemType } from '../../graphql/nodes';
-import Item from './ItemModel';
 
-export const CreateItemMutation = mutationWithClientMutationId({
+import Item from '../ItemModel';
+import { ItemType } from '../ItemType';
+
+export default mutationWithClientMutationId({
   name: 'CreateItem',
   inputFields: {
     name: { type: new GraphQLNonNull(GraphQLString) },

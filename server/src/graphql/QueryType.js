@@ -1,5 +1,5 @@
 import { GraphQLObjectType } from 'graphql';
-import { nodeField } from './nodes';
+import { nodeField } from '../modules/node/definitions';
 import { ListItemsQuery } from '../modules/item/ItemQuery';
 
 const QueryType = new GraphQLObjectType({
