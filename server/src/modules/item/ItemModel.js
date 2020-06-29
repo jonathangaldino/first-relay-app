@@ -18,7 +18,8 @@ const ItemSchema = new Schema(
   },
   {
     timestamps: true,
-  }
+    collection: 'items',
+  },
 );
 
 const Item = model('Item', ItemSchema);
