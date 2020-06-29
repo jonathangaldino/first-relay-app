@@ -1,13 +1,13 @@
 import { nodeDefinitions, fromGlobalId } from 'graphql-relay';
 
-import ItemServices from '../item/ItemServices';
+import ItemModel from '../item/ItemModel';
 
 export const { nodeInterface, nodeField } = nodeDefinitions(
   async globalId => {
     const { type, id } = fromGlobalId(globalId);
 
     if (type === 'Item') {
-      return ItemServices.getItem(id);
+      return ItemModel.findById(id);
     }
 
     return null;

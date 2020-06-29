@@ -22,6 +22,6 @@ const ItemSchema = new Schema(
   },
 );
 
-const Item = model('Item', ItemSchema);
+const ItemModel = model('Item', ItemSchema);
 
-export default Item;
+export default ItemModel;

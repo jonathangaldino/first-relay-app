@@ -1,7 +1,7 @@
 import { mutationWithClientMutationId } from 'graphql-relay';
 import { GraphQLNonNull, GraphQLString, GraphQLInt } from 'graphql';
 
-import Item from '../ItemModel';
+import ItemModel from '../ItemModel';
 import { ItemType } from '../ItemType';
 
 export default mutationWithClientMutationId({
@@ -12,7 +12,7 @@ export default mutationWithClientMutationId({
     type: { type: new GraphQLNonNull(GraphQLString) },
   },
   mutateAndGetPayload: async ({ name, price, type }) => {
-    const newItem = await Item.create({ name, price, type });
+    const newItem = await ItemModel.create({ name, price, type });
 
     return {
       itemId: newItem._id,
@@ -22,7 +22,7 @@ export default mutationWithClientMutationId({
     item: {
       type: ItemType,
       resolve: async ({ itemId }) => {
-        const item = await Item.findById(itemId);
+        const item = await ItemModel.findById(itemId);
         return item;
       },
     },
