@@ -7,7 +7,7 @@ import { createServer } from './server'
 
   const server = createServer();
 
-  server.listen(4000).then(({ url }) => {
-    console.log(`Server is running at ${url} 🚀`);
-  });
+  server.listen(4000, () => {
+    console.log(`Server is running at port 4000 🚀`);
+  })
 })();

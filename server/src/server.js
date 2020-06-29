@@ -1,15 +1,26 @@
-import { ApolloServer } from 'apollo-server';
-
-import typeDefs from './graphql/typedefs';
-import { resolvers } from './graphql/resolvers';
+import koa from 'koa';
+import mount from 'koa-mount';
+import graphqlHTTP from 'koa-graphql';
 
 import './common/environment';
+import { schema } from './graphql/schema';
 
 const createServer = () => {
-  return new ApolloServer({
-    typeDefs,
-    resolvers,
-  });
+  const server = new koa();
+
+  server.on('error', err => {
+    console.log('Server error', err);
+  })
+
+  server.use(
+    mount('/graphql',
+    graphqlHTTP({
+      schema,
+      graphiql: true
+    }))
+  )
+
+  return server;
 };
 
 export { createServer }
