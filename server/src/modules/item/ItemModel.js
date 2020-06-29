@@ -22,6 +22,8 @@ const ItemSchema = new Schema(
   },
 );
 
+ItemSchema.index({ name: 'text' });
+
 const ItemModel = model('Item', ItemSchema);
 
 export default ItemModel;

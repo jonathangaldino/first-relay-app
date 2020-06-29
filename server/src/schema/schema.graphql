@@ -5,14 +5,27 @@ type Query {
     """The ID of an object"""
     id: ID!
   ): Node
-  items: [Item]!
   me: User!
+  items(name: String): [Item]!
+  item(id: ID!): Item!
 }
 
 """An object with an ID"""
 interface Node {
   """The id of the object."""
   id: ID!
+}
+
+"""User data"""
+type User implements Node {
+  """The ID of an object"""
+  id: ID!
+
+  """mongoose _id"""
+  _id: String!
+  email: String!
+  createdAt: String
+  updatedAt: String
 }
 
 """Item data"""
@@ -33,18 +46,6 @@ enum ItemTypeEnum {
   GUN
   ARMOR
   SKILL
-}
-
-"""User data"""
-type User implements Node {
-  """The ID of an object"""
-  id: ID!
-
-  """mongoose _id"""
-  _id: String!
-  email: String!
-  createdAt: String
-  updatedAt: String
 }
 
 type Mutation {

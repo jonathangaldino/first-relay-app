@@ -1,6 +1,6 @@
 import { GraphQLObjectType } from 'graphql';
 import { nodeField } from '../modules/node/definitions';
-import { ListItemsQuery } from '../modules/item/ItemQuery';
+import { ListItemsQuery, GetItemQuery } from '../modules/item/ItemQuery';
 import { MeQuery } from '../modules/user/UserQuery';
 
 const QueryType = new GraphQLObjectType({
@@ -8,8 +8,9 @@ const QueryType = new GraphQLObjectType({
   description: 'The root of all queries',
   fields: () => ({
     node: nodeField,
-    items: ListItemsQuery,
     me: MeQuery,
+    items: ListItemsQuery,
+    item: GetItemQuery,
   }),
 });
 
