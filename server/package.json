@@ -4,7 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon -r dotenv/config -r esm src/index.js"
+    "dev": "nodemon -r dotenv/config -r esm src/index.js",
+    "update-schema": "node -r esm src/scripts/updateSchema.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

@@ -1,0 +1,45 @@
+"""The root of all queries"""
+type Query {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+  items: [Item]!
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+"""Item data"""
+type Item implements Node {
+  """The ID of an object"""
+  id: ID!
+
+  """mongoose _id"""
+  _id: String!
+  name: String
+  price: Int
+  type: String
+  createdAt: String
+  updatedAt: String
+}
+
+type Mutation {
+  CreateItem(input: CreateItemInput!): CreateItemPayload
+}
+
+type CreateItemPayload {
+  item: Item
+  clientMutationId: String
+}
+
+input CreateItemInput {
+  name: String!
+  price: Int!
+  type: String!
+  clientMutationId: String
+}
