@@ -1,12 +1,13 @@
 import { nodeDefinitions, fromGlobalId, globalIdField } from 'graphql-relay';
 import { GraphQLObjectType, GraphQLString, GraphQLInt } from 'graphql';
+import { mongooseIDResolver } from '../common/mongooseIDResolver';
 
 import ItemService from '../modules/item/ItemService';
 
 export const { nodeInterface, nodeField } = nodeDefinitions(
   async globalId => {
     const { type, id } = fromGlobalId(globalId);
-    console.log({ type, id });
+    console.log({ type, id, globalId });
 
     if (type === 'Item') {
       return ItemService.getItem(id);
@@ -15,8 +16,10 @@ export const { nodeInterface, nodeField } = nodeDefinitions(
     return null;
   },
   obj => {
-    console.log('aaa');
-    return obj.price ? ItemType : null;
+    console.log('aaa', obj);
+    if (obj.type) return ItemType;
+
+    return null;
   },
 );
 
@@ -26,7 +29,8 @@ export const ItemType = new GraphQLObjectType({
   name: 'Item',
   description: 'Item data',
   fields: () => ({
-    id: globalIdField(),
+    id: globalIdField('Item'),
+    ...mongooseIDResolver,
     name: {
       type: GraphQLString,
       resolve: item => item.name,
