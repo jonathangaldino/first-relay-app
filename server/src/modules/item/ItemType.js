@@ -1,8 +1,23 @@
 import { globalIdField } from 'graphql-relay';
-import { GraphQLString, GraphQLInt, GraphQLObjectType } from 'graphql';
+import {
+  GraphQLString,
+  GraphQLInt,
+  GraphQLObjectType,
+  GraphQLEnumType,
+  GraphQLNonNull,
+} from 'graphql';
 
 import { mongooseIDResolver, timestamps } from '../../common/mongooseResolvers';
 import { nodeInterface } from '../node/definitions';
+
+export const ItemTypeEnumType = new GraphQLEnumType({
+  name: 'ItemTypeEnum',
+  values: {
+    GUN: { value: 'GUN' },
+    ARMOR: { value: 'ARMOR' },
+    SKILL: { value: 'SKILL' },
+  },
+});
 
 export const ItemType = new GraphQLObjectType({
   name: 'Item',
@@ -11,15 +26,15 @@ export const ItemType = new GraphQLObjectType({
     id: globalIdField('Item'),
     ...mongooseIDResolver,
     name: {
-      type: GraphQLString,
+      type: GraphQLNonNull(GraphQLString),
       resolve: item => item.name,
     },
     price: {
-      type: GraphQLInt,
+      type: GraphQLNonNull(GraphQLInt),
       resolve: item => item.price,
     },
     type: {
-      type: GraphQLString,
+      type: GraphQLNonNull(ItemTypeEnumType),
       resolve: item => item.type,
     },
     ...timestamps,
