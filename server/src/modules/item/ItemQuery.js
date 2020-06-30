@@ -17,8 +17,16 @@ export const ListItemsQuery = {
     ...connectionArgs,
   },
   resolve: async (_root, args, context) => {
+    let conditions;
+
+    if (args.name) {
+      conditions = {
+        $text: { $search: args.name },
+      };
+    }
+
     return connectionFromMongoCursor({
-      cursor: ItemModel.find().sort({ createdAt: -1 }),
+      cursor: ItemModel.find(conditions).sort({ createdAt: -1 }),
       context,
       args,
       loader: (_, id) => ItemModel.findById(id),
