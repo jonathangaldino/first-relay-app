@@ -1,25 +1,28 @@
-import { GraphQLList, GraphQLNonNull, GraphQLID, GraphQLString } from 'graphql';
+import { GraphQLNonNull, GraphQLID, GraphQLString } from 'graphql';
+import { connectionArgs } from 'graphql-relay';
+import {
+  connectionFromMongoCursor,
+  // eslint-disable-next-line
+} from '@entria/graphql-mongoose-loader';
 
 import ItemModel from './ItemModel';
-import { ItemType } from './ItemType';
+import { ItemType, ItemConnection } from './ItemType';
 
 export const ListItemsQuery = {
-  type: new GraphQLNonNull(GraphQLList(ItemType)),
+  type: new GraphQLNonNull(ItemConnection.connectionType),
   args: {
     name: {
       type: GraphQLString,
     },
+    ...connectionArgs,
   },
-  resolve: async (_root, { name }, _ctx) => {
-    let filter;
-
-    if (name) {
-      filter = {
-        $text: { $search: name },
-      };
-    }
-
-    return ItemModel.find(filter || {});
+  resolve: async (_root, args, context) => {
+    return connectionFromMongoCursor({
+      cursor: ItemModel.find().sort({ createdAt: -1 }),
+      context,
+      args,
+      loader: (_, id) => ItemModel.findById(id),
+    });
   },
 };
 

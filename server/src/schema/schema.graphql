@@ -6,7 +6,7 @@ type Query {
     id: ID!
   ): Node
   me: User!
-  items(name: String): [Item]!
+  items(name: String, after: String, first: Int, before: String, last: Int): ItemConnection!
   item(id: ID!): Item!
 }
 
@@ -24,8 +24,42 @@ type User implements Node {
   """mongoose _id"""
   _id: String!
   email: String!
+  items(after: String, first: Int, before: String, last: Int): ItemConnection!
   createdAt: String
   updatedAt: String
+}
+
+"""A connection to a list of items."""
+type ItemConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ItemEdge]
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+"""An edge in a connection."""
+type ItemEdge {
+  """The item at the end of the edge"""
+  node: Item
+
+  """A cursor for use in pagination"""
+  cursor: String!
 }
 
 """Item data"""
@@ -35,6 +69,7 @@ type Item implements Node {
 
   """mongoose _id"""
   _id: String!
+  owner: User
   name: String!
   price: Int!
   type: ItemTypeEnum!

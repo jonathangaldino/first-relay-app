@@ -2,6 +2,11 @@ import { Schema, model } from 'mongoose';
 
 const ItemSchema = new Schema(
   {
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
     name: {
       type: String,
       required: true,

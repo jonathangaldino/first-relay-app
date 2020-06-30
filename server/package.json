@@ -8,6 +8,7 @@
     "update-schema": "node -r esm src/scripts/updateSchema.js"
   },
   "dependencies": {
+    "@entria/graphql-mongoose-loader": "^4.3.2",
     "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
     "graphql": "^15.1.0",
