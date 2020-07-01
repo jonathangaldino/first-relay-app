@@ -6,7 +6,7 @@ import { GraphQLNonNull, GraphQLString } from 'graphql';
 export const mongooseIDResolver = {
   _id: {
     type: GraphQLNonNull(GraphQLString),
-    description: 'mongoose _id',
+    description: 'mongodb _id',
     resolve: ({ _id }) => _id.toString(),
   },
 };

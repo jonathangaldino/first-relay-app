@@ -11,7 +11,7 @@ export const UserType = new GraphQLObjectType({
     id: globalIdField('User'),
     ...mongooseIDResolver,
     email: {
-      type: GraphQLNonNull(GraphQLString),
+      type: new GraphQLNonNull(GraphQLString),
       resolve: user => user.email,
     },
     ...timestamps,

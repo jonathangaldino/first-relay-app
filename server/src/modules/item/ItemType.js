@@ -5,8 +5,6 @@ import {
   GraphQLObjectType,
   GraphQLEnumType,
   GraphQLNonNull,
-  GraphQLList,
-  GraphQLBoolean,
 } from 'graphql';
 
 import { mongooseIDResolver, timestamps } from '../../common/mongooseResolvers';
