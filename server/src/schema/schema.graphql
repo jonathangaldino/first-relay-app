@@ -21,10 +21,9 @@ type User implements Node {
   """The ID of an object"""
   id: ID!
 
-  """mongoose _id"""
+  """mongodb _id"""
   _id: String!
   email: String!
-  items(after: String, first: Int, before: String, last: Int): ItemConnection!
   createdAt: String
   updatedAt: String
 }
@@ -67,7 +66,7 @@ type Item implements Node {
   """The ID of an object"""
   id: ID!
 
-  """mongoose _id"""
+  """mongodb _id"""
   _id: String!
   owner: User
   name: String!

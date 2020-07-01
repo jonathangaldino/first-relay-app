@@ -12,6 +12,10 @@ const writeFileAsync = fs.promises.writeFile;
       schema: graphQLSchema,
       path: '../schema',
     },
+    {
+      schema: graphQLSchema,
+      path: '../../../web/data'
+    }
   ];
 
   await Promise.all([
