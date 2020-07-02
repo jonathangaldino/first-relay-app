@@ -1,4 +1,4 @@
-import  { Variables, UploadableMap } from 'react-relay';
+import  { Variables } from 'react-relay';
 import  { RequestNode } from 'relay-runtime';
 
 export const GRAPHQL_URL = 'http://localhost:4000/graphql';

@@ -1,6 +1,7 @@
 import Koa from 'koa';
 import mount from 'koa-mount';
 import graphqlHTTP from 'koa-graphql';
+import cors from '@koa/cors';
 
 import './common/environment';
 import { schema } from './graphql/schema';
@@ -24,6 +25,8 @@ const graphqlServer = graphqlHTTP(serverSettings);
 
 const createServer = () => {
   const server = new Koa();
+
+  server.use(cors());
 
   server.on('error', err => {
     console.log('Server error', err);
