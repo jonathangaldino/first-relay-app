@@ -4,6 +4,7 @@ import graphql from 'babel-plugin-relay/macro';
 import { Container } from './styles';
 import Form from '../../components/Form';
 import Mutation from '../../relay/mutation';
+import { useHistory } from 'react-router-dom';
 
 const mutation = graphql`
   mutation SigninMutation($data: UserLoginWithEmailInput!) {
@@ -20,10 +21,20 @@ const mutation = graphql`
 
 const Signin = () => {
   const [loading, setLoading] = useState(false);
-  
+  const history = useHistory();
+
   const onCompleted = useCallback(({ UserLoginWithEmail: { token, me } }, errors) => {
-    console.log({ token, me, errors})
     setLoading(false);
+    
+    if (errors) {
+      console.log({ errors });
+      return;
+    }
+
+    if (token) {
+      localStorage.setItem("first-relay-app::token", token);
+      history.push('/list');
+    }
   }, [])
 
   const onError = useCallback((err) => {

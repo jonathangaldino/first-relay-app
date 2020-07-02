@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 
 const Form = ({ submitCallback, setLoading, loading, linkTo, linkMessage }) => {
-  const [email, setEmail] = useState("jonathan23@galdino.dev");
+  const [email, setEmail] = useState("jonathan@galdino.dev");
   const [password, setPassword] = useState("jonathan");
 
   const handleSubmit = useCallback((event) => {
