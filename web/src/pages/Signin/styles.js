@@ -45,6 +45,12 @@ export const Form = styled.form`
     background: #4C566A;
     color: #D8DEE9;
     font-weight: 300;
+
+    transition: background 0.3s;
+
+    &:hover {
+      background: #434C5E;
+    }
   }
 
   a {
@@ -52,5 +58,10 @@ export const Form = styled.form`
     margin-top: 10px;
 
     color: #4C566A;
+    transition: color 0.3s;
+
+    &:hover {
+      color: #D8DEE9;
+    }
   }
 `;

@@ -23,13 +23,10 @@ const Signin = (props) => {
   const [password, setPassword] = useState("jonathan");
   const [loading, setLoading] = useState(false);
   
-  console.log({ props }) ;
-
   const onCompleted = useCallback(({ UserLoginWithEmail: { token, me } }, errors) => {
     console.log({ token, me, errors})
     setLoading(false);
 
-    // history.push('/home');
   }, [])
 
   const onError = useCallback((err) => {
