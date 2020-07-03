@@ -15,7 +15,7 @@ type Config = {
 export default function createQueryRenderer(
   FragmentComponent,
   Component,
-  config: Config,
+  config,
 ) {
   const { query, queriesParams } = config;
 

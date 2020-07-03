@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Signin from '../pages/Signin';
 import Signup from '../pages/Signup';
-import ListItem from '../pages/ListItem';
+import ItemList from '../pages/ItemList';
 
 const Routes = () => {
   return (
@@ -11,7 +11,7 @@ const Routes = () => {
       <Switch>
         <Route exact path="/" component={Signin} />
         <Route exact path="/signup" component={Signup} />
-        <Route exact path="/list" component={ListItem} />
+        <Route exact path="/list" component={ItemList} />
       </Switch>
     </Router>
   )

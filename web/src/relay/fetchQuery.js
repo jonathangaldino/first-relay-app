@@ -3,8 +3,13 @@ import  { RequestNode } from 'relay-runtime';
 
 export const GRAPHQL_URL = 'http://localhost:4000/graphql';
 
-// Define a function that fetches the results of a request (query/mutation/etc)
-// and returns its results as a Promise:
+const TOKEN_KEY = 'first-relay-app::token';
+
+export function getToken() {
+  // get token from cookie or session token instead
+  return localStorage.getItem(TOKEN_KEY);
+}
+
 const fetchQuery = async (request: RequestNode, variables: Variables) => {
   const body = JSON.stringify({
     name: request.name, // used by graphql mock on tests
@@ -14,6 +19,7 @@ const fetchQuery = async (request: RequestNode, variables: Variables) => {
   const headers = {
     Accept: 'application/json',
     'Content-type': 'application/json',
+    Authorization: getToken(),
   };
 
   const response = await fetch(GRAPHQL_URL, {
