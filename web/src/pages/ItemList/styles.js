@@ -13,7 +13,7 @@ export const Content = styled.div`
   width: 100%;
 
   display: flex;
-  flex-direction: column;  
+  flex-direction: column;
 
   h1 { align-self: center; }
 `;
@@ -22,4 +22,10 @@ export const List = styled.div`
   flex: 1;
   margin-top: 100px;
   padding: 20px 20px;
+
+  width: 80%;
+  align-self: center;
+  
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
 `;
