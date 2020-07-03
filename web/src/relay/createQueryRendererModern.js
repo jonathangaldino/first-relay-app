@@ -8,7 +8,7 @@ export default function createQueryRenderer(
   Component,
   config,
 ) {
-  const { query, queriesParams } = config;
+  const { query, queriesParams, getFragmentProps } = config;
 
   class QueryRendererWrapper extends React.Component {
     render() {
@@ -19,13 +19,15 @@ export default function createQueryRenderer(
           environment={Environment}
           query={query}
           variables={variables}
-          render={({ error, props }) => {
+          render={({ error, props }) => {            
             if (error) {
               return <span>{error.toString()}</span>;
             }
             
             if (props) {
-              return <FragmentComponent {...this.props} query={props} />;
+              const fragmentProps = getFragmentProps ? getFragmentProps(props) : { query: props }
+
+              return <FragmentComponent {...this.props} {...fragmentProps} />;
             }
 
             return <span>loading</span>;

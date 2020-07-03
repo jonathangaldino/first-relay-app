@@ -6,10 +6,11 @@ import { Container, Content, List } from './styles';
 import Environment from '../../relay/Environment';
 // import createQueryRenderer from '../../relay/createQueryRendererModern';
 import Item from '../../components/Item';
+import createQueryRenderer from '../../relay/createQueryRendererModern';
 
 
 const ItemList = ({ items }) => {  
-  
+    
   return (
     <Container>
       <Content>
@@ -35,44 +36,22 @@ const ItemListFragmentContainer = createFragmentContainer(ItemList, {
   `
 })
 
-// const ItemListQR = createQueryRenderer(
-//   ItemListFragmentContainer,
-//   ItemList,
-//   {
-//     query: graphql`
-//       query ItemListQuery {
-//         items {
-//           ...ItemList_items
-//         }
-//       }
-//     `,
-//   },
-// );
-
-
-const ItemListQueryRenderer = () => (
-  <QueryRenderer
-    environment={Environment}
-    query={graphql`
+const ItemListQR = createQueryRenderer(
+  ItemListFragmentContainer,
+  ItemList,
+  {
+    query: graphql`
       query ItemListQuery {
         items {
           ...ItemList_items
         }
       }
-    `}
-    render={({ error, props }) => {
-      if (error) {
-        return <span>{error.toString()}</span>;
-      }
-
-      if (props) {
-        return <ItemListFragmentContainer {...props} query={props} />;
-      }
-
-      return <span>loading</span>;
-    }}
-  />
-)
+    `,
+    getFragmentProps: ({ items }) => ({
+      items,
+    })
+  },
+);
 
 
-export default ItemListQueryRenderer;
+export default ItemListQR;
