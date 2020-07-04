@@ -4,9 +4,9 @@ import { Container } from './styles';
 import { Link } from 'react-router-dom';
 
 
-const Form = ({ submitCallback, setLoading, loading, linkTo, linkMessage }) => {
+const Form = ({ submitCallback, setLoading, loading, linkTo, linkMessage, btnMessage }) => {
   const [email, setEmail] = useState("jonathan@galdino.dev");
-  const [password, setPassword] = useState("jonathan");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = useCallback((event) => {
     event.preventDefault();
@@ -33,7 +33,7 @@ const Form = ({ submitCallback, setLoading, loading, linkTo, linkMessage }) => {
         />
       </label>
 
-      { loading ? <button type="submit" disabled>Loading...</button> : <button type="submit">Signin</button> }
+      { loading ? <button type="submit" disabled>Loading...</button> : <button type="submit">{btnMessage}</button> }
   <Link to={linkTo}>{linkMessage}</Link>
     </Container>
   )

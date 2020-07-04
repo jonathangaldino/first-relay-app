@@ -56,6 +56,7 @@ const Signin = () => {
         setLoading={setLoading}
         linkTo={"/signup"}
         linkMessage={"I don't have an account yet"}
+        btnMessage={"Signin"}
       />
     </Container>
   )
