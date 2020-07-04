@@ -16,6 +16,12 @@ export const Content = styled.div`
   flex-direction: column;
 
   h1 { align-self: center; }
+
+  a {
+    color: #E5E9F0;
+    align-self: center;
+    margin-top: 15px;
+  }
 `;
 
 export const List = styled.div`

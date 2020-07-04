@@ -1,20 +1,18 @@
 import React from 'react';
-import { createFragmentContainer, QueryRenderer } from 'react-relay';
+import { createFragmentContainer } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
+import { Link } from 'react-router-dom';
 
 import { Container, Content, List } from './styles';
-import Environment from '../../relay/Environment';
-// import createQueryRenderer from '../../relay/createQueryRendererModern';
 import Item from '../../components/Item';
 import createQueryRenderer from '../../relay/createQueryRendererModern';
 
-
-const ItemList = ({ items }) => {  
-    
+const ItemList = ({ items }) => {
   return (
     <Container>
       <Content>
         <h1>Items</h1>
+        <Link to="/create">Create a item</Link>
 
         <List>
           { items.edges.map(item => <Item key={item.node.__id} item={item.node} />) }
