@@ -25,13 +25,16 @@ export const Content = styled.div`
 `;
 
 export const List = styled.div`
-  flex: 1;
-  margin-top: 100px;
-  padding: 20px 20px;
-
-  width: 80%;
-  align-self: center;
+  background: purple;
   
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  row-gap: 30px;
+`;
+
+export const Center = styled.div`
+  margin-top: 100px;
+  align-self: center;
+  background: red;
+  width: 60%;
 `;

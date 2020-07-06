@@ -16,7 +16,6 @@ const ItemFragmentContainer = createFragmentContainer(Item, {
   item: graphql`
     fragment Item_item on Item {
       _id
-      id
       name
       price
       type
