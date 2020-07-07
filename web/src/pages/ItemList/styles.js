@@ -22,19 +22,26 @@ export const Content = styled.div`
     align-self: center;
     margin-top: 15px;
   }
+
+  p {
+    align-self: center;
+    margin: 100px 0px;
+    color: red;
+  }
 `;
 
 export const List = styled.div`
-  background: purple;
+  width: 100%;
   
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  justify-items: center;
   row-gap: 30px;
 `;
 
 export const Center = styled.div`
   margin-top: 100px;
   align-self: center;
-  background: red;
   width: 60%;
 `;

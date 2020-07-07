@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import graphql from 'babel-plugin-relay/macro';
 import { Link } from 'react-router-dom';
 import { createRefetchContainer } from 'react-relay';
@@ -52,7 +52,7 @@ const ItemList = (props) => {
         </Center>
 
         
-        { !items.pageInfo.hasNextPage && <p>There's no more to get</p>}
+        { !items.pageInfo.hasNextPage && <p>Nothing more to see</p>}
       </Content>
     </Container>
   )
