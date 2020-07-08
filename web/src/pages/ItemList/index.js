@@ -54,13 +54,18 @@ const ItemList = ({ data, relay }) => {
           >
             
             <List>
-            { items.edges.map(item => <Item key={item.node.__id} item={item.node} />) }
+              { 
+                items.edges.map(item => 
+                  <Item key={item.node.__id} item={item.node} />
+                ) 
+              }
             </List>
           </InfiniteScroll>
         </Center>
 
         
-        { !items.pageInfo.hasNextPage && 
+        { 
+          !items.pageInfo.hasNextPage && 
           !isFetchingMore && 
           <p>Nothing more to see</p> 
         }
