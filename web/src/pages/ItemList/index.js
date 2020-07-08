@@ -1,24 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import graphql from 'babel-plugin-relay/macro';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { createRefetchContainer } from 'react-relay';
 import InfiniteScroll from 'react-infinite-scroller';
 
-import { Container, Content, List, Center } from './styles';
+import { Container, Content, List, Center, Actions } from './styles';
 import Item from '../../components/Item';
 import createQueryRenderer from '../../relay/createQueryRendererModern';
 
-const ItemList = (props) => {
+const ItemList = ({ data, relay }) => {
   const [isFetchingMore, setIsFetchingMore] = useState(false);
+  const history = useHistory();
 
-  const { data: { items }, relay } = props;
+  const { items } = data;
 
   const loadMore = () => {
     if (isFetchingMore) return;
 
     const itemsAlreadyFetchedLength = items.edges.length;
 
-    const refetchVariables = fragmentVariables => ({
+    const refetchVariables = () => ({
       first: itemsAlreadyFetchedLength + 10,
     })
 
@@ -30,20 +31,27 @@ const ItemList = (props) => {
     );
   }
 
+  const handleLogout = useCallback(() => {
+    localStorage.removeItem("first-relay-app::token");
+    history.push('/');
+  }, [])
+
   return (
     <Container>
       <Content>
-        <h1>Items</h1>
-        <Link to="/create">Create a item</Link>
+        <Actions>
+          <h1>Items</h1>
+          <Link to="/create">Create a item</Link>
+          <button type="button" onClick={handleLogout}>Logout</button>
+        </Actions>
 
         <Center>
           <InfiniteScroll
-              pageStart={0}
-              loadMore={loadMore}
-              hasMore={items.pageInfo.hasNextPage}
-              loader={<p key={0}>Loading</p>}
-              threshold={15}
-            >
+            pageStart={0}
+            loadMore={loadMore}
+            hasMore={items.pageInfo.hasNextPage}
+            threshold={15}
+          >
             
             <List>
             { items.edges.map(item => <Item key={item.node.__id} item={item.node} />) }
@@ -52,7 +60,10 @@ const ItemList = (props) => {
         </Center>
 
         
-        { !items.pageInfo.hasNextPage && <p>Nothing more to see</p>}
+        { !items.pageInfo.hasNextPage && 
+          !isFetchingMore && 
+          <p>Nothing more to see</p> 
+        }
       </Content>
     </Container>
   )
