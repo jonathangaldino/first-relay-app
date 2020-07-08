@@ -27,14 +27,9 @@ export const Container = styled.form`
   }
 
   button {
-    height: 35px;
-    border: 0;
-    border-radius: 50px;
     background: #4C566A;
     color: #D8DEE9;
     font-weight: 300;
-
-    transition: background 0.3s;
 
     &:hover {
       background: #434C5E;

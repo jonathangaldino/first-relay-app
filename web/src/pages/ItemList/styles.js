@@ -15,18 +15,35 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
 
-  h1 { align-self: center; }
-
-  a {
-    color: #E5E9F0;
-    align-self: center;
-    margin-top: 15px;
-  }
-
   p {
     align-self: center;
     margin: 100px 0px;
+    font-weight: 30px;
     color: red;
+  }
+`;
+
+
+export const Actions = styled.div`
+  align-self: center;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+
+  h1 {
+    font-size: 28px;
+  }
+
+  a {
+    color: #E5E9F0;
+    margin-top: 15px;
+  }
+
+  button {
+    background: #5E81AC;
+    margin-top: 15px;
   }
 `;
 

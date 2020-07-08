@@ -39,5 +39,10 @@ export default createGlobalStyle`
 
   button {
     cursor: pointer;
+    height: 35px;
+    border: 0;
+    border-radius: 50px;
+    transition: background 0.3s;
+    width: 250px;
   }
 `;
