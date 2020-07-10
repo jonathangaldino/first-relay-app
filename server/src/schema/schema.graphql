@@ -1,0 +1,125 @@
+"""The root of all queries"""
+type Query {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+  me: User!
+  items(name: String, after: String, first: Int, before: String, last: Int): ItemConnection!
+  item(id: ID!): Item!
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+"""User data"""
+type User implements Node {
+  """The ID of an object"""
+  id: ID!
+
+  """mongodb _id"""
+  _id: String!
+  email: String!
+  createdAt: String
+  updatedAt: String
+}
+
+"""A connection to a list of items."""
+type ItemConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ItemEdge]
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+"""An edge in a connection."""
+type ItemEdge {
+  """The item at the end of the edge"""
+  node: Item
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+"""Item data"""
+type Item implements Node {
+  """The ID of an object"""
+  id: ID!
+
+  """mongodb _id"""
+  _id: String!
+  owner: User
+  name: String!
+  price: Int!
+  type: ItemTypeEnum!
+  createdAt: String
+  updatedAt: String
+}
+
+enum ItemTypeEnum {
+  GUN
+  ARMOR
+  SKILL
+}
+
+type Mutation {
+  UserRegisterWithEmail(input: UserRegisterWithEmailInput!): UserRegisterWithEmailPayload
+  UserLoginWithEmail(input: UserLoginWithEmailInput!): UserLoginWithEmailPayload
+  CreateItem(input: CreateItemInput!): CreateItemPayload
+}
+
+type UserRegisterWithEmailPayload {
+  token: String
+  me: User
+  clientMutationId: String
+}
+
+input UserRegisterWithEmailInput {
+  email: String!
+  password: String!
+  clientMutationId: String
+}
+
+type UserLoginWithEmailPayload {
+  token: String
+  me: User
+  clientMutationId: String
+}
+
+input UserLoginWithEmailInput {
+  email: String!
+  password: String!
+  clientMutationId: String
+}
+
+type CreateItemPayload {
+  item: Item
+  clientMutationId: String
+}
+
+input CreateItemInput {
+  name: String!
+  price: Int!
+  type: String!
+  clientMutationId: String
+}

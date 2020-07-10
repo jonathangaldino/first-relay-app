@@ -1,10 +1,48 @@
-import { GraphQLList, GraphQLNonNull } from 'graphql';
-import { ItemType } from '../../graphql/nodes';
-import Item from './ItemModel';
+import { GraphQLNonNull, GraphQLID, GraphQLString } from 'graphql';
+import { connectionArgs } from 'graphql-relay';
+import {
+  connectionFromMongoCursor,
+  // eslint-disable-next-line
+} from '@entria/graphql-mongoose-loader';
+
+import ItemModel from './ItemModel';
+import { ItemType, ItemConnection } from './ItemType';
 
 export const ListItemsQuery = {
-  type: new GraphQLNonNull(GraphQLList(ItemType)),
-  resolve: async (_root, _args, _ctx) => {
-    return Item.find();
+  type: new GraphQLNonNull(ItemConnection.connectionType),
+  args: {
+    name: {
+      type: GraphQLString,
+    },
+    ...connectionArgs,
+  },
+  resolve: async (_root, args, context) => {
+    let conditions;
+
+    if (args.name) {
+      conditions = {
+        // $text: { $search: args.name },
+        name: { $regex: new RegExp(args.name, 'i')}
+      };
+    }
+
+    return connectionFromMongoCursor({
+      cursor: ItemModel.find(conditions).sort({ createdAt: -1 }),
+      context,
+      args,
+      loader: (_, id) => ItemModel.findById(id),
+    });
+  },
+};
+
+export const GetItemQuery = {
+  type: new GraphQLNonNull(ItemType),
+  args: {
+    id: {
+      type: new GraphQLNonNull(GraphQLID),
+    },
+  },
+  resolve: async (_root, { id }, _ctx) => {
+    return ItemModel.findById(id);
   },
 };

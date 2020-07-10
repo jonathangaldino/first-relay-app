@@ -2,6 +2,11 @@ import { Schema, model } from 'mongoose';
 
 const ItemSchema = new Schema(
   {
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
     name: {
       type: String,
       required: true,
@@ -18,9 +23,12 @@ const ItemSchema = new Schema(
   },
   {
     timestamps: true,
-  }
+    collection: 'items',
+  },
 );
 
-const Item = model('Item', ItemSchema);
+ItemSchema.index({ name: 'text' });
 
-export default Item;
+const ItemModel = model('Item', ItemSchema);
+
+export default ItemModel;
