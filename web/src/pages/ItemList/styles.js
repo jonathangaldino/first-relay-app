@@ -61,4 +61,45 @@ export const Center = styled.div`
   margin-top: 100px;
   align-self: center;
   width: 60%;
+  /* background: yellow; */
+
+  display: flex;
+  flex-direction: column;
+
+`;
+
+export const Search = styled.div`
+  align-self: center;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40px;
+  padding: 10px 10px;
+
+  button {
+    width: 60px;
+    height: 30px;
+    border-radius: 0%;
+
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+  }
+
+  input {
+    width: 300px;
+
+    height: 30px;
+    border: 0;
+
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+
+    outline: 0;
+    background: #4C566A;
+    color: #D8DEE9;
+    padding-left: 10px;
+  }
+
 `;

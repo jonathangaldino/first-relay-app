@@ -21,7 +21,8 @@ export const ListItemsQuery = {
 
     if (args.name) {
       conditions = {
-        $text: { $search: args.name },
+        // $text: { $search: args.name },
+        name: { $regex: new RegExp(args.name, 'i')}
       };
     }
 
