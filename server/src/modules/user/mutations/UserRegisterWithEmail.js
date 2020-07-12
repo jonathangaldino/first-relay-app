@@ -4,6 +4,7 @@ import { GraphQLNonNull, GraphQLString } from 'graphql';
 import UserModel from '../UserModel';
 import { UserType } from '../UserType';
 import { createToken } from '../../../common/auth';
+import * as UserLoader from '../UserLoader';
 
 export default mutationWithClientMutationId({
   name: 'UserRegisterWithEmail',
@@ -44,9 +45,7 @@ export default mutationWithClientMutationId({
     },
     me: {
       type: UserType,
-      resolve: async ({ id }, _, _ctx) => {
-        return UserModel.findById(id);
-      },
+      resolve: async ({ id }, _, ctx) => UserLoader.load(ctx, id),
     },
   },
 });

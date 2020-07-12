@@ -2,6 +2,7 @@ import { mutationWithClientMutationId } from 'graphql-relay';
 import { GraphQLNonNull, GraphQLString, GraphQLInt } from 'graphql';
 
 import ItemModel from '../ItemModel';
+import * as ItemLoader from '../ItemLoader';
 import { ItemType } from '../ItemType';
 
 export default mutationWithClientMutationId({
@@ -33,9 +34,8 @@ export default mutationWithClientMutationId({
   outputFields: {
     item: {
       type: ItemType,
-      resolve: async ({ itemId }) => {
-        const item = await ItemModel.findById(itemId);
-        return item;
+      resolve: async ({ itemId }, _, ctx) => {
+        return ItemLoader.load(ctx, itemId);
       },
     },
   },

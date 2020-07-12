@@ -1,11 +1,7 @@
 import { GraphQLNonNull, GraphQLID, GraphQLString } from 'graphql';
 import { connectionArgs } from 'graphql-relay';
-import {
-  connectionFromMongoCursor,
-  // eslint-disable-next-line
-} from '@entria/graphql-mongoose-loader';
 
-import ItemModel from './ItemModel';
+import * as ItemLoader from './ItemLoader';
 import { ItemType, ItemConnection } from './ItemType';
 
 export const ListItemsQuery = {
@@ -16,23 +12,7 @@ export const ListItemsQuery = {
     },
     ...connectionArgs,
   },
-  resolve: async (_root, args, context) => {
-    let conditions;
-
-    if (args.name) {
-      conditions = {
-        // $text: { $search: args.name },
-        name: { $regex: new RegExp(args.name, 'i')}
-      };
-    }
-
-    return connectionFromMongoCursor({
-      cursor: ItemModel.find(conditions).sort({ createdAt: -1 }),
-      context,
-      args,
-      loader: (_, id) => ItemModel.findById(id),
-    });
-  },
+  resolve: async (_root, args, context) => ItemLoader.loadItems(context, args),
 };
 
 export const GetItemQuery = {
@@ -42,7 +22,5 @@ export const GetItemQuery = {
       type: new GraphQLNonNull(GraphQLID),
     },
   },
-  resolve: async (_root, { id }, _ctx) => {
-    return ItemModel.findById(id);
-  },
+  resolve: async (_root, { id }, ctx) => ItemLoader.load(ctx, id),
 };

@@ -3,6 +3,7 @@ import { GraphQLString, GraphQLNonNull } from 'graphql';
 
 import UserModel from '../UserModel';
 import { createToken } from '../../../common/auth';
+import * as UserLoader from '../UserLoader';
 import { UserType } from '../UserType';
 
 export default mutationWithClientMutationId({
@@ -44,9 +45,7 @@ export default mutationWithClientMutationId({
     },
     me: {
       type: UserType,
-      resolve: async ({ id }, _args, _context) => {
-        return UserModel.findById(id);
-      },
+      resolve: async ({ id }, _args, context) => UserLoader.load(context, id),
     },
   },
 });
