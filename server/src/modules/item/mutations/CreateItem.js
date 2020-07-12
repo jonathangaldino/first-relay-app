@@ -4,6 +4,7 @@ import { GraphQLNonNull, GraphQLString, GraphQLInt } from 'graphql';
 import ItemModel from '../ItemModel';
 import * as ItemLoader from '../ItemLoader';
 import { ItemType } from '../ItemType';
+import { errorField, successField } from '../../../common/commonFields';
 
 export default mutationWithClientMutationId({
   name: 'CreateItem',
@@ -17,7 +18,9 @@ export default mutationWithClientMutationId({
     // Have to look around a way to pass a middleware
     // within this object that is being exported as default
     if (!ctx.user) {
-      throw new Error('User not logged');
+      return {
+        error: 'User not authenticated',
+      };
     }
 
     const newItem = await ItemModel.create({
@@ -29,6 +32,7 @@ export default mutationWithClientMutationId({
 
     return {
       itemId: newItem._id,
+      success: 'Item created with success',
     };
   },
   outputFields: {
@@ -38,5 +42,7 @@ export default mutationWithClientMutationId({
         return ItemLoader.load(ctx, itemId);
       },
     },
+    ...errorField,
+    ...successField,
   },
 });

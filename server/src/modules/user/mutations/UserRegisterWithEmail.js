@@ -5,6 +5,7 @@ import UserModel from '../UserModel';
 import { UserType } from '../UserType';
 import { createToken } from '../../../common/auth';
 import * as UserLoader from '../UserLoader';
+import { errorField, successField } from '../../../common/commonFields';
 
 export default mutationWithClientMutationId({
   name: 'UserRegisterWithEmail',
@@ -24,7 +25,9 @@ export default mutationWithClientMutationId({
       })) > 0;
 
     if (userExists) {
-      throw new Error('Email already in use');
+      return {
+        error: 'Email already in use',
+      };
     }
 
     const user = await UserModel.create({
@@ -35,6 +38,7 @@ export default mutationWithClientMutationId({
     return {
       token: createToken(user),
       id: user._id,
+      success: 'User registered',
     };
   },
 
@@ -47,5 +51,7 @@ export default mutationWithClientMutationId({
       type: UserType,
       resolve: async ({ id }, _, ctx) => UserLoader.load(ctx, id),
     },
+    ...errorField,
+    ...successField,
   },
 });

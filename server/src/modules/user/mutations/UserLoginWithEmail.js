@@ -5,6 +5,7 @@ import UserModel from '../UserModel';
 import { createToken } from '../../../common/auth';
 import * as UserLoader from '../UserLoader';
 import { UserType } from '../UserType';
+import { errorField, successField } from '../../../common/commonFields';
 
 export default mutationWithClientMutationId({
   name: 'UserLoginWithEmail',
@@ -23,13 +24,17 @@ export default mutationWithClientMutationId({
     const errorMessage = 'Invalid credentials';
 
     if (!user) {
-      throw new Error(errorMessage);
+      return {
+        error: errorMessage,
+      };
     }
 
     const isPasswordCorrect = user.comparePassword(password, user.password);
 
     if (!isPasswordCorrect) {
-      throw new Error(errorMessage);
+      return {
+        error: errorMessage,
+      };
     }
 
     return {
@@ -47,5 +52,7 @@ export default mutationWithClientMutationId({
       type: UserType,
       resolve: async ({ id }, _args, context) => UserLoader.load(context, id),
     },
+    ...errorField,
+    ...successField,
   },
 });
