@@ -1,11 +1,9 @@
-import { GraphQLNonNull, GraphQLList } from 'graphql';
+import { GraphQLNonNull } from 'graphql';
 
 import { UserType } from './UserType';
-import UserModel from './UserModel';
+import * as UserLoader from './UserLoader';
 
 export const MeQuery = {
   type: new GraphQLNonNull(UserType),
-  resolve: async (_root, _args, { user }) => {
-    return UserModel.findById(user._id);
-  },
+  resolve: async (_root, _args, ctx) => UserLoader.load(ctx, ctx.user._id),
 };

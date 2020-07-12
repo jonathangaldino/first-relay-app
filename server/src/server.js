@@ -7,6 +7,9 @@ import './common/environment';
 import { schema } from './graphql/schema';
 import { getUserFromToken } from './common/auth';
 
+import * as loaders from './loader';
+import getDataloaders from './loader/getDataloaders';
+
 const serverSettings = async req => {
   const token = req.headers.authorization;
   const user = await getUserFromToken(token);
@@ -15,6 +18,7 @@ const serverSettings = async req => {
     graphiql: process.env.NODE_ENV !== 'production',
     schema,
     context: {
+      dataloaders: getDataloaders(loaders),
       user,
       req,
     },
